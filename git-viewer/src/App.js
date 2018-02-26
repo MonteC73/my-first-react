@@ -27,18 +27,6 @@ const Card = (props) => {
   );
 };
 
-let data = [
-  { name: "Paul O'Shannessy",
-    avatar_url: "https://avatars.githubusercontent.com/u/8445?v3",
-    company: "Facebook" },
-    { name: "Paul O'Shannessy",
-    avatar_url: "https://avatars.githubusercontent.com/u/8445?v3",
-    company: "Facebook" },
-    { name: "Paul O'Shannessy",
-    avatar_url: "https://avatars.githubusercontent.com/u/8445?v3",
-    company: "Facebook" }
-];
-
 const CardList = (props) => {
   return (
     <div>
@@ -47,12 +35,38 @@ const CardList = (props) => {
   );
 };
 
+class Form extends React.Component {
+  handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('Event: Form Submit', this.userNameInput.value);
+  };
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input type="text" 
+          ref={(input) => this.userNameInput = input} //control input from the DOM
+          placeholder="Github username" />
+        <button type="submit">Add card</button>
+      </form>
+    )
+  }
+}
+
 class App extends Component {
+  state = {
+    cards: [
+      { name: "Paul O'Shannessy",
+        avatar_url: "https://avatars.githubusercontent.com/u/8445?v3",
+        company: "Facebook" },
+    ]
+  }
+
   render() {
     return (
       <div>
         <Header />
-        <CardList cards={data}/>
+        <Form />
+        <CardList cards={this.state.cards} />
       </div>
     );
   }
